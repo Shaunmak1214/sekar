@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import {
 	View,
 	ActivityIndicator,
@@ -6,6 +6,7 @@ import {
 	TouchableOpacity,
 	ScrollView,
 	Alert,
+	Button,
 } from 'react-native';
 import i18next from 'i18next';
 import { useTranslation } from 'react-i18next';
@@ -22,6 +23,30 @@ import { isImageSourcePropType } from '@/types/guards/image';
 import SendImage from '@/theme/assets/images/send.png';
 import ColorsWatchImage from '@/theme/assets/images/colorswatch.png';
 import TranslateImage from '@/theme/assets/images/translate.png';
+
+import Animated, { useSharedValue, withSpring } from 'react-native-reanimated';
+
+function ExampleComponent() {
+	// Create a ref to store the animated value
+	const width = useSharedValue(100);
+
+	const handlePress = () => {
+		width.value = withSpring(width.value + 50);
+	};
+
+	return (
+		<View style={{ flex: 1, alignItems: 'center' }}>
+			<Animated.View
+				style={{
+					width,
+					height: 100,
+					backgroundColor: 'violet',
+				}}
+			/>
+			<Button onPress={handlePress} title="Click me" />
+		</View>
+	);
+}
 
 function Example() {
 	const { t } = useTranslation(['example', 'welcome']);
@@ -109,6 +134,8 @@ function Example() {
 							{t('welcome:description')}
 						</Text>
 					</View>
+
+					<ExampleComponent />
 
 					<View
 						style={[

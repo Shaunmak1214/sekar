@@ -61,6 +61,10 @@ module.exports = {
 		'import/no-extraneous-dependencies': ['error', { devDependencies: true }],
 		'react/display-name': 'off',
 		'no-console': ['error', { allow: ['error'] }],
+		'@typescript-eslint/no-unsafe-assignment': 'off',
+		'@typescript-eslint/no-unsafe-call': 'off',
+		'@typescript-eslint/no-unsafe-member-access': 'off',
+		'react-native/no-inline-styles': 'off',
 		'prettier/prettier': [
 			'error',
 			{

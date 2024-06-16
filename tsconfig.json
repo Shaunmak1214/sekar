@@ -6,6 +6,7 @@
       "@/*": ["./src/*"]
     },
     "allowImportingTsExtensions": false,
+    allowun
     "module": "esnext",
   },
   "include": [
