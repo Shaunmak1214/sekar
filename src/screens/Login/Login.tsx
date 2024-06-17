@@ -4,38 +4,17 @@ import {
 	TouchableOpacity,
 	ScrollView,
 	useWindowDimensions,
-	TextInput,
+	Image,
 } from 'react-native';
 
 import { SafeScreen } from '@/components/template';
 import { useTheme } from '@/theme';
 
-import { isImageSourcePropType } from '@/types/guards/image';
+import LoginVector from '@/theme/assets/images/login-vector.png';
 
-import SendImage from '@/theme/assets/images/send.png';
-import ColorsWatchImage from '@/theme/assets/images/colorswatch.png';
-import TranslateImage from '@/theme/assets/images/translate.png';
-
-import BottomSheet, { BottomSheetView } from '@gorhom/bottom-sheet';
-import { useCallback, useLayoutEffect, useRef, useState } from 'react';
-
-function Login() {
-	const { width, height } = useWindowDimensions();
+function Login({ navigation, route }) {
+	const { height } = useWindowDimensions();
 	const { colors, layout, gutters, fonts } = useTheme();
-	const bottomSheetRef = useRef<BottomSheet>(null);
-	const stepOneRef = useRef<View>(null);
-
-	if (
-		!isImageSourcePropType(SendImage) ||
-		!isImageSourcePropType(ColorsWatchImage) ||
-		!isImageSourcePropType(TranslateImage)
-	) {
-		throw new Error('Image source is not valid');
-	}
-
-	const handleSheetChanges = useCallback((index: number) => {
-		console.log('handleSheetChanges', index);
-	}, []);
 
 	return (
 		<SafeScreen>
@@ -86,6 +65,16 @@ function Login() {
 						>
 							Scan, Split and Share, bills easily
 						</Text>
+
+						<View
+							style={[
+								layout.itemsCenter,
+								layout.justifyCenter,
+								gutters.marginTop_40,
+							]}
+						>
+							<Image source={LoginVector} style={{ width: 150, height: 150 }} />
+						</View>
 					</View>
 				</View>
 
@@ -140,9 +129,7 @@ function Login() {
 								},
 							]}
 							onPress={() => {
-								if (bottomSheetRef) {
-									bottomSheetRef.current?.snapToIndex(0);
-								}
+								navigation.navigate('Home');
 							}}
 						>
 							<Text
@@ -191,98 +178,6 @@ function Login() {
 					</View>
 				</View>
 			</ScrollView>
-			<BottomSheet
-				ref={bottomSheetRef}
-				onChange={handleSheetChanges}
-				snapPoints={[height * 0.27, height * 0.5, height * 0.8]}
-				enablePanDownToClose
-				backgroundStyle={{
-					backgroundColor: colors.white,
-					width: width - 30,
-					marginLeft: 15,
-				}}
-			>
-				<BottomSheetView>
-					<View
-						style={[
-							layout.justifyStart,
-							layout.itemsStart,
-							gutters.paddingHorizontal_20,
-							gutters.paddingVertical_12,
-							{
-								backgroundColor: colors.white,
-								width: width - 30,
-								marginLeft: 15,
-							},
-						]}
-						ref={stepOneRef}
-					>
-						<Text
-							style={[
-								fonts.size_20,
-								{
-									fontFamily: 'Poppins-SemiBold',
-								},
-								gutters.marginBottom_14,
-							]}
-						>
-							What was the occasion?
-						</Text>
-
-						<TextInput
-							style={[
-								{
-									width: '100%',
-									borderColor: colors.pureBlack,
-									borderWidth: 2,
-									borderRadius: 14,
-									paddingHorizontal: 16,
-									paddingVertical: 14,
-									fontFamily: 'Poppins-Regular',
-									color: colors.sekarBlack,
-									backgroundColor: colors.white,
-								},
-								fonts.size_14,
-								gutters.marginBottom_16,
-							]}
-							onChangeText={() => {}}
-							value={1}
-							placeholder="EG: Lunch at Restaurant Kim Fan"
-							keyboardType="numeric"
-						/>
-
-						<TouchableOpacity
-							activeOpacity={0.9}
-							testID="fetch-user-button"
-							style={[
-								gutters.marginBottom_16,
-								{
-									width: '100%',
-									height: 50,
-									borderRadius: 20,
-									backgroundColor: colors.pureBlack,
-									justifyContent: 'center',
-									alignItems: 'center',
-								},
-							]}
-							onPress={() => {}}
-						>
-							<Text
-								style={[
-									fonts.white,
-									fonts.size_14,
-									fonts.bold,
-									{
-										fontFamily: 'Montserrat-Regular',
-									},
-								]}
-							>
-								Next
-							</Text>
-						</TouchableOpacity>
-					</View>
-				</BottomSheetView>
-			</BottomSheet>
 		</SafeScreen>
 	);
 }

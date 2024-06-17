@@ -4,6 +4,7 @@ export type RootStackParamList = {
 	Startup: undefined;
 	Example: undefined;
 	LogIn: undefined;
+	Home: undefined;
 };
 
 export type RootScreenProps<
